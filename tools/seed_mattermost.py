@@ -10,8 +10,8 @@ the terminal without echo. Generated student passwords are written to
 .local/mattermost_users.json next to this script's parent folder, which is
 git-ignored, so the demo can sign in as any of them. Nothing is printed.
 
-Usage:
-    python tools/seed_mattermost.py --team <team-name> [--channel trailnet-lab]
+Usage (posts !unassign-agent and !follow-ups off before seeding, !follow-ups on after):
+    python tools/seed_mattermost.py [--team switch] [--channel trailnet-lab] [--main-agent coordinator.lab]
                                     [--url http://localhost:50921] [--admin user]
                                     [--log seed/chat_log.md] [--dry-run]
 """
@@ -91,6 +91,8 @@ def main():
     ap.add_argument("--channel", default="trailnet-lab")
     ap.add_argument("--log", default=str(ROOT / "seed" / "chat_log.md"))
     ap.add_argument("--dry-run", action="store_true", help="parse the log and list what would be created")
+    ap.add_argument("--main-agent", default=None,
+                    help="agent to reassign as the room's main agent after seeding, e.g. coordinator.lab")
     args = ap.parse_args()
 
     msgs = parse_log(args.log)
@@ -162,6 +164,19 @@ def main():
     for uid in users.values():
         mm.call("POST", f"/channels/{channel_id}/members", {"user_id": uid})
 
+    # Quiet the agents first. With a main agent assigned, every human post reaches
+    # it, and with follow-ups on, posts can reach an agent that spoke recently.
+    # On Nov 3 the coordinator answered all 35 seed posts as if they were current.
+    def room_command(text):
+        status, resp, _ = mm.call("POST", "/posts", {"channel_id": channel_id, "message": text})
+        if status not in (200, 201):
+            raise SystemExit(f"room command {text!r} failed: {status} {resp.get('message', '')}")
+        time.sleep(3)
+
+    room_command("!unassign-agent")
+    room_command("!follow-ups off")
+    print("agents quieted: no main agent, follow-ups off")
+
     # Post the log as each person, in order.
     tokens = {}
     for display, (username, _, _) in PEOPLE.items():
@@ -180,6 +195,13 @@ def main():
         posted += 1
         time.sleep(0.2)
     print(f"posted {posted} messages to {args.channel}")
+
+    room_command("!follow-ups on")
+    if args.main_agent:
+        room_command(f"!assign-agent @{args.main_agent}")
+        print(f"follow-ups back on, main agent {args.main_agent}")
+    else:
+        print("follow-ups back on; no main agent (pass --main-agent to set one)")
     print(f"student passwords are in {cred_path}")
     return 0
 

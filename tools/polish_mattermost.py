@@ -44,7 +44,7 @@ PEOPLE = [
 HEADER = (
     "**TrailNet Lab** · on-device wildlife counting · "
     "Coordinator routes · Scribe: meetings, decisions, tasks · Librarian: papers · "
-    "Reporter: lab board · Logbook: daily logs by DM · Auditor: status and risks · "
+    "Reporter: lab board · Logbook: daily logs by DM · Auditor: status and risks · Organizer: meetings and notices · "
     "Workshop paper due **Dec 1** · Model budget **250 KB** · Pinned: brief, guide, log format"
 )
 
@@ -110,7 +110,7 @@ class MM:
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--url", default=None, help="Mattermost URL; default: found with docker port")
-    ap.add_argument("--channel", default="trailnet-lab")
+    ap.add_argument("--channel", default="trailnet")
     ap.add_argument("--no-header", action="store_true")
     ap.add_argument("--pins", action="store_true", help="post and pin the lab guide, brief, log format and lab board")
     args = ap.parse_args()

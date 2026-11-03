@@ -27,6 +27,8 @@ AGENTS = [
      "Turns a student's direct message about their day into a daily log entry they approve before it is shared."),
     ("auditor.lab", "auditor", "claude-opus-5-5", None,
      "Audits status and risks for the PI: who did what, what is blocked, what needs a decision."),
+    ("organizer.lab", "organizer", "claude-sonnet-5-5", None,
+     "Acts for the PI: announcements, meeting notices with agendas, reminders, transcript requests, private messages."),
 ]
 
 MEMBERS = ["maya.chen", "priya.nair", "lucas.moreno", "sofia.alvarez", "omar.haddad", "wei.zhang"]
@@ -34,7 +36,8 @@ MEMBERS = ["maya.chen", "priya.nair", "lucas.moreno", "sofia.alvarez", "omar.had
 KICKOFF = (
     "@coordinator this is the TrailNet lab room. The room instructions hold the project brief. "
     "@scribe handles meetings, @librarian papers, @reporter the weekly lab board, @logbook daily logs "
-    "by direct message, @auditor status and risks. Each of you: introduce yourself in one line."
+    "by direct message, @auditor status and risks, @organizer announcements and meetings. "
+    "Each of you: introduce yourself in one line."
 )
 
 

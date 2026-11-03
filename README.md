@@ -2,7 +2,7 @@
 
 A research group's AI workstation in team chat, built on [Switch](https://github.com/sandbox-quantum/switch) for the Flip the Switch hackathon (Nov 4 to 7, 2026).
 
-A professor and five students share one chat room with six Claude Code agents. The agents turn meetings, papers, daily work and commits into a record the whole lab can trust, and every record a person depends on is approved by a person.
+A professor and five students share one chat room with seven Claude Code agents. The agents turn meetings, papers, daily work and commits into a record the whole lab can trust, and every record a person depends on is approved by a person.
 
 | Agent | What it does | Model |
 | --- | --- | --- |
@@ -12,6 +12,7 @@ A professor and five students share one chat room with six Claude Code agents. T
 | logbook | Turns a student's private message about their day into a log entry they approve before it is shared. | Haiku 5.5 |
 | reporter | Makes the weekly lab board: hours, commits, what moved, what is blocked, what waits for the PI. | Opus 5.5 |
 | auditor | Checks status and risks: work without evidence, overdue tasks, stale blockers, numbers that disagree. | Opus 5.5 |
+| organizer | Acts for the PI: pinned announcements, meeting notices with agendas, reminders, transcript requests, private notes. | Sonnet 5.5 |
 
 The lab, its people and its data are fictional. The demo project, TrailNet, is a camera trap that counts wildlife on the device.
 
@@ -20,7 +21,7 @@ The lab, its people and its data are fictional. The demo project, TrailNet, is a
 - **One room, one memory.** The Switch room holds the instructions every agent reads, and three room documents: `decisions-log` and `task-list` (owned by scribe) and `daily-logs` (owned by logbook).
 - **Agents hand work to each other by name.** The reporter sends evidence to the scribe to close tasks; the scribe asks the coordinator to get a human ruling on an ambiguous decision.
 - **People stay in charge.** Decisions count only after the PI approves them. A daily log is shared only after the student says yes.
-- **Reproducible in one step.** `switch/labroom.template.yaml` creates the room, its six agents, members, aliases and kickoff from Switch Console > Templates.
+- **Reproducible in one step.** `switch/labroom.template.yaml` creates the room, its seven agents, members, aliases and kickoff from Switch Console > Templates.
 
 ## Repository
 

@@ -73,8 +73,24 @@ Every claim cites its source: a log date, a commit hash, a message time.
 - Hours are optional and self-reported. The student approves every entry before anyone sees it.
 - Everyone in the lab sees the same records, the PI included. There is no private channel about students.
 
+## Meetings, announcements and private notes
+
+The organizer acts for the PI. Switch agents cannot pin a post or open a private chat with a person, so `tools/lab_actions.py` does those two things with the PI's delegated account, only when the PI asked, and logs every action to `out/actions.log`.
+
+| The PI says | What happens |
+| --- | --- |
+| "Post an announcement: ..." | A short, clear notice in the lab room, pinned |
+| "Schedule the group meeting Thu 10:00 to 10:45, link ..., agenda ..." | A pinned notice with a numbered agenda (owner, minutes) and a "Before the meeting" list built from the records; everyone tagged; registered in `out/meetings.json` |
+| (lab clock, 15 min before) | "⏰ starts in 15 minutes", attendees tagged |
+| (lab clock, at the start) | "▶️ starting now" with the link |
+| (lab clock, 5 min after the end) | "✅ is over: attach the transcript and tag the scribe", then the notice is unpinned |
+| "Send Lucas a private message: ..." (PI only) | A short message in her voice in Lucas's private chat, signed "sent for Dr. Chen by the lab organizer" |
+
+Only Dr. Chen or Priya can ask for announcements and meetings, and only Dr. Chen for private messages. The organizer refuses anyone else.
+
 ## Automation
 
-- Daily at 17:00, a reminder asks the logbook to nudge anyone who hasn't logged today.
-- Mondays at 09:00, a scheduled message asks the reporter for last week's lab board and the auditor for the weekly audit.
-- Both are plain scheduled posts (`tools/schedule_lab.ps1`), because Switch has no scheduler of its own.
+- `tools/lab_clock.py` runs in a terminal and nudges the organizer at meeting times through a private chat, so the lab room only sees the organizer's posts.
+- Weekdays at 17:00, a scheduled post asks the logbook to remind anyone who hasn't logged today.
+- Mondays at 09:00, a scheduled post asks the reporter for last week's lab board and the auditor for the weekly audit.
+- Both are Windows scheduled tasks (`tools/schedule_lab.ps1`), because Switch has no scheduler of its own.

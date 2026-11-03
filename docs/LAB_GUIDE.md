@@ -1,6 +1,6 @@
 🧭 **How this room works**
 
-Six agents work in this room. To ask one, type @ followed by its name.
+Seven agents work in this room. To ask one, type @ followed by its name.
 
 | Agent | Ask it to | For example |
 | --- | --- | --- |
@@ -10,8 +10,11 @@ Six agents work in this room. To ask one, type @ followed by its name.
 | reporter | make the weekly lab board | last week's progress |
 | logbook | turn your day into a log entry | send it a direct message, any words |
 | auditor | check status and risks | audit this week |
+| organizer | announcements, meetings, reminders, private notes from Dr. Chen | schedule Thursday's group meeting |
 
 **Decisions** from meetings stay PROPOSED until Dr. Chen or Priya replies "approve".
+
+**Meetings** get a pinned notice with the agenda, a reminder 15 minutes before, and a request for the transcript afterwards.
 
 **Daily logs** go to logbook in a direct message. It drafts an entry, you say "yes", and only then is it shared here. Hours are optional and always your own numbers.
 

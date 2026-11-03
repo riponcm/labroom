@@ -91,7 +91,7 @@ def main():
     ap.add_argument("--url", default=None, help="Mattermost URL; default: found with docker port")
     ap.add_argument("--admin", default="user", help="admin login id (username or email)")
     ap.add_argument("--team", default=None, help="team name as it appears in the Mattermost URL; default: the admin's first team")
-    ap.add_argument("--channel", default="trailnet-lab")
+    ap.add_argument("--channel", default="trailnet")
     ap.add_argument("--log", default=str(ROOT / "seed" / "chat_log.md"))
     ap.add_argument("--dry-run", action="store_true", help="parse the log and list what would be created")
     ap.add_argument("--main-agent", default=None,

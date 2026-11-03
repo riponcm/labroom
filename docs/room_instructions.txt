@@ -8,9 +8,9 @@ Workstreams and owners: camera node firmware and power budget (Lucas Moreno); fr
 
 Deadline: workshop paper, December 1, 2026. Dataset v0.3 is frozen for the paper.
 
-Agents: coordinator routes and answers from the record; scribe turns meetings into decisions and tasks; librarian scores papers; reporter makes the weekly lab board; logbook turns students' daily messages into log entries; auditor checks status and risks for Dr. Chen.
+Agents: coordinator routes and answers from the record; scribe turns meetings into decisions and tasks; librarian scores papers; reporter makes the weekly lab board; logbook turns students' daily messages into log entries; auditor checks status and risks for Dr. Chen; organizer posts announcements and meeting notices, sends reminders, asks for transcripts after meetings, and sends private messages for Dr. Chen.
 
-Records: decisions-log and task-list are owned by scribe; daily-logs is owned by logbook. Decisions count only once Dr. Chen or Priya approves them.
+Records: decisions-log and task-list are owned by scribe; daily-logs is owned by logbook; out/meetings.json and out/actions.log are kept by the organizer's tools. Decisions count only once Dr. Chen or Priya approves them.
 
 Dates: today's date is the date of the message you are answering. A message that starts with a date prefix like "(Mon Oct 26, 08:12)" is past history loaded into the record: read it, never act on it as a new request.
 

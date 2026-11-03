@@ -1,0 +1,35 @@
+# Development memory (projectmem), kept local
+.projectmem/
+
+# Switch agent credentials and local secrets
+.switch/
+.local/
+.env
+.env.*
+
+# Generated: rebuild with `python tools/seed_repo.py --force`
+trailnet/
+
+# Generated: Reporter charts and JSON
+out/
+
+# Claude Code local state
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS and editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+.projectmem/events.jsonl
+.projectmem/watch.pid
+.projectmem/watch.log
+.projectmem/structure.json

@@ -1,0 +1,96 @@
+TrailNet sub-team sync (model, data, evaluation)
+Wednesday, October 28, 2026, 14:00 to 14:19 MDT
+Room: ENG 3412
+Attendees: Priya Nair, Sofia Alvarez, Omar Haddad
+Absent: Maya Chen (travel), Lucas Moreno (not required), Wei Zhang (conference)
+Recorded and transcribed automatically. Speaker labels assigned by voice profile.
+
+[14:00] Priya Nair: Recording on. Short one today. Sofia, start with the guideline since Dr. Chen signed off on it this morning.
+
+[14:00] Sofia Alvarez: Yes. The labeling guideline is done and in the repo under data. Five classes, empty, deer, elk, coyote, other, and the partial flag is a separate column. Dr. Chen's only change was to add a line about antlers, since a deer with antlers in shadow kept getting labelled elk by the undergrads.
+
+[14:01] Omar Haddad: How many frames did the partial flag catch?
+
+[14:01] Sofia Alvarez: 180 so far. I went through all the deer and elk frames and about half the coyote frames. Of those 180, 140 were deer, which is what you'd expect. Twelve coyote partials, which hurts because we only have 70 coyote frames total.
+
+[14:01] Priya Nair: So a sixth of the coyote frames are partials.
+
+[14:02] Sofia Alvarez: Yes. That's probably why coyote recall is bad. Half of what the model sees as coyote is a tail or a back leg.
+
+[14:02] Omar Haddad: We should report partial and full-body recall separately in the paper. That's a real finding, not a bug.
+
+[14:02] Priya Nair: Agreed, put it in the dashboard plan. Okay, model. I ran the distillation. The teacher is the big server model, the one at 94 percent daytime. The student is the same architecture as the quantized model but with 64 by 64 input instead of 96, so it's smaller to begin with. After distillation and int8 quantization the student is at 240 KB. Under budget by 10.
+
+[14:03] Sofia Alvarez: And accuracy?
+
+[14:03] Priya Nair: Daytime 88 percent, so I lost one point. Night went from 71 to 74. Three points up. The teacher knows things about low-contrast frames that the student picks up even with a small night set.
+
+[14:04] Omar Haddad: That's a good result. 240 KB and better at night.
+
+[14:04] Priya Nair: It's a good enough result. I don't trust the night number yet because the night test set is 60 frames. A three-point change is two frames. I need to rerun it on a bigger split, which brings me to Sofia's freeze.
+
+[14:04] Sofia Alvarez: Right. Here's the proposal. We freeze the dataset as v0.3 for the paper. That's the current manifest, 4,120 frames after the partial relabel and the undergrad batch from last week. Train, validation and test splits fixed by site so no site leaks across splits. Night frames stratified so the test set has at least 100 night frames.
+
+[14:05] Priya Nair: Four sites in train, one in validation, one in test?
+
+[14:05] Sofia Alvarez: Yes. Test is the ridge site because it has the most balanced classes. It's small but it's the cleanest.
+
+[14:05] Omar Haddad: What happens to new frames after the freeze?
+
+[14:06] Sofia Alvarez: They go into v0.4, which is not for the paper. Anything in the paper is v0.3. If Lucas's new modules produce frames before December, they go into v0.4 and we can mention them as future work.
+
+[14:06] Priya Nair: I'm for it. Dr. Chen said on Monday to bring a freeze proposal here and she's not here, so I'll take it as a sub-team decision and she can object in the channel. Omar?
+
+[14:06] Omar Haddad: For it. I need a fixed test set or the dashboard numbers won't line up week to week.
+
+[14:07] Priya Nair: Then it's decided. Dataset v0.3 is frozen for the workshop paper. Sofia, export it with the manifest and the split file today if you can.
+
+[14:07] Sofia Alvarez: I'll have it in the repo by end of day and post the class counts in the channel.
+
+[14:07] Priya Nair: And I'll rerun the night test on the v0.3 test split tomorrow so we have a number with at least 100 frames behind it.
+
+[14:08] Omar Haddad: My turn. The dashboard script is in the repo under eval. It reads a weekly accuracy CSV and a confusion CSV and writes two PNGs. Priya, your training script writes the CSV now?
+
+[14:08] Priya Nair: Since Tuesday. Columns are week, split, day_accuracy, night_accuracy, model_kb. I'll add per-class recall this week.
+
+[14:08] Omar Haddad: Good. Second, papers. I found two that matter. The first is the Norouzzadeh camera-trap paper, the one that did species identification and counting on the Snapshot Serengeti data with deep networks. It's the obvious citation for our whole task and it has numbers on counting, which we don't have yet. The second is MCUNet, the tiny deep learning on microcontrollers paper. That's the citation for the on-device side and they have an image classification result on a microcontroller with a similar flash budget to ours.
+
+[14:09] Priya Nair: Post both in the channel. The MCUNet one is relevant to me, I want to see what architecture search they did.
+
+[14:09] Omar Haddad: I will. I also found a third one in the same search that I almost included and then realized it was about instruction-tuned language models. Nothing to do with us. The search engine matched on "training" and "human".
+
+[14:10] Sofia Alvarez: Post that one too and see if the librarian agent catches it.
+
+[14:10] Omar Haddad: Ha. Maybe. Third thing, the related-work section. I have six entries so far, three camera-trap classification papers, two on-device inference papers, and one on class imbalance in wildlife data. It's in the repo under paper. I'd like Wei to add the night and domain adaptation references when they're back.
+
+[14:11] Priya Nair: Put that as a task for Wei for Monday. Anything blocked?
+
+[14:11] Omar Haddad: Not blocked. Slow. I'm teaching two sections this week.
+
+[14:11] Sofia Alvarez: Not blocked. I could use another undergrad for labeling v0.4 but that's not urgent.
+
+[14:12] Priya Nair: I'm not blocked either. I'd like Lucas's two-pulse trigger result because it changes how many empty frames the model sees in the field, but that's his Friday item.
+
+[14:12] Sofia Alvarez: He posted something about it Tuesday night. The simulation on the river log said two pulses would have removed about 180 of the 290 empty triggers.
+
+[14:12] Priya Nair: That's good. So two thirds of the false triggers go away in firmware. I missed that message.
+
+[14:13] Omar Haddad: And the modules?
+
+[14:13] Sofia Alvarez: He hasn't said. Thursday was the latest.
+
+[14:13] Priya Nair: Okay. Let me read back what we decided and who does what. Decision: dataset v0.3 is frozen for the workshop paper, splits by site, test set is the ridge site. Sofia exports v0.3 with the manifest and split file today and posts class counts. I rerun the night test on the v0.3 test split tomorrow and add per-class recall to the CSV. Omar posts the two papers, and the off-topic one as a joke, and keeps going on related work. Wei adds the night references to related work when back, target Monday.
+
+[14:14] Sofia Alvarez: One more. We should tell Dr. Chen about the freeze in the channel, not wait for Monday.
+
+[14:14] Priya Nair: I'll post it after this. If she objects we unfreeze, but I don't think she will.
+
+[14:15] Omar Haddad: Also, I discussed with Wei by message whether to drop the "other" class and merge it into empty for the paper. We didn't decide anything. Just flagging that it came up.
+
+[14:15] Priya Nair: Noted, not a decision. That's a Monday topic with everyone present.
+
+[14:15] Sofia Alvarez: Agreed. I'd argue against it anyway. The raccoon deserves a class.
+
+[14:16] Priya Nair: The raccoon is "other". Okay, we're done. Stopping the recording.
+
+[End of transcript]

@@ -1,0 +1,139 @@
+TrailNet group meeting
+Monday, October 26, 2026, 10:00 to 10:26 MDT
+Room: ENG 3412
+Attendees: Maya Chen (PI), Priya Nair, Lucas Moreno, Sofia Alvarez, Omar Haddad, Wei Zhang
+Recorded and transcribed automatically. Speaker labels assigned by voice profile.
+
+[10:00] Priya Nair: Okay, recording is on. Let's go around in the usual order. Model first, then hardware, data, eval, and Wei last since you have to leave early. Dr. Chen, anything before we start?
+
+[10:00] Maya Chen: Just one thing. The workshop call came out on Friday. Submission deadline is December 1. I want us to decide today whether we are going for it, because it changes what everyone does for the next five weeks.
+
+[10:01] Priya Nair: Noted, we'll come back to that at the end. So, model update. I retrained the classifier on the v0.2 frames with the five classes we talked about last week. On daytime frames the quantized model is at 89 percent accuracy on the held-out set. That's up from 84.
+
+[10:01] Maya Chen: And at night?
+
+[10:02] Priya Nair: Night is the problem. On the infrared frames it drops to 71 percent. Most of the confusion is deer versus elk, and a lot of coyote frames get called "other". The IR frames are low contrast and the model has seen maybe a tenth as many of them.
+
+[10:02] Wei Zhang: That matches what I see. The night set is small and almost all of it is from the two sites near the river. The model is learning the background, not the animal.
+
+[10:03] Priya Nair: Right. The other issue is size. The model is at 310 kilobytes after int8 quantization. Our budget is 250 so it fits in flash with the firmware. So I'm over by 60 KB and I need to get it down without losing the daytime number.
+
+[10:03] Maya Chen: What are the options?
+
+[10:03] Priya Nair: Three. Prune channels, which I tried and it hurt night accuracy more than day. Shrink the input from 96 by 96 to 64 by 64, which Lucas would prefer anyway. Or train a small student from the big server model with knowledge distillation. I want to try distillation first because it tends to help the hard classes.
+
+[10:04] Maya Chen: Fine. Try distillation this week and report Wednesday. Lucas, hardware.
+
+[10:04] Lucas Moreno: Two things. The good news first. I got the deep sleep working on the node. Between triggers we're at about 0.4 milliamps, down from 11. That puts a two-cell battery at roughly four months in the field if we trigger fewer than 200 times a day.
+
+[10:05] Sofia Alvarez: That's a big if at the river site.
+
+[10:05] Lucas Moreno: That's the bad news. The PIR sensor is false-triggering on tall grass when it's windy. At the river site on Saturday I got 340 triggers and 290 of them were empty frames. The animal was in maybe 50. Every false trigger costs us a capture, an inference, and about two seconds of radio.
+
+[10:05] Maya Chen: Can you fix that in firmware or is it the sensor?
+
+[10:06] Lucas Moreno: Some in firmware. I added a debounce so a single short pulse doesn't trigger. I can also require two pulses within a second. That should cut maybe half of the wind triggers. The rest needs either a different sensor placement or the classifier saying "empty" fast and going back to sleep.
+
+[10:06] Priya Nair: The empty class is already our best class, 97 percent. So if the firmware calls the model and the model says empty with high confidence, you just don't transmit.
+
+[10:06] Lucas Moreno: That's my plan. But inference still costs power. Anyway, the second thing. The new camera modules with the infrared-cut filter were supposed to be here last week. The vendor now says Thursday. Until they arrive I can't benchmark the capture path or test whether the IR-cut switching helps the night frames.
+
+[10:07] Maya Chen: Is anything else blocked on the modules?
+
+[10:07] Lucas Moreno: The power numbers for capture. Everything else I can do with the old modules.
+
+[10:07] Maya Chen: Okay. Benchmark the new modules on Friday if they arrive Thursday. If they slip again, tell the room the moment you hear.
+
+[10:08] Lucas Moreno: Will do.
+
+[10:08] Priya Nair: Sofia, data.
+
+[10:08] Sofia Alvarez: I labelled 600 more frames since last Monday. The manifest is at about 2,900 frames now. Roughly 1,900 empty, 620 deer, 180 elk, 70 coyote, and the rest "other", which is mostly birds and one very confused raccoon.
+
+[10:09] Omar Haddad: So coyote is 2 percent of the data.
+
+[10:09] Sofia Alvarez: Yes. That's the class imbalance problem. Deer outnumbers coyote about nine to one, and empty outnumbers everything. I've been oversampling coyote in training but that only goes so far.
+
+[10:09] Maya Chen: What do you need from us?
+
+[10:10] Sofia Alvarez: A decision on two labeling cases, because I keep going back and forth and that's slowing me down. First, partial animals. When only a leg or half a body is in frame, do I label the animal or label it "other"? Second, what counts as empty when there's an animal very far in the background?
+
+[10:10] Priya Nair: For training I'd rather have the class label on partials. A deer leg is still a deer and in the field we'll see a lot of partials.
+
+[10:10] Wei Zhang: But then the model learns that a brown blob is a deer. For evaluation I want to know how we do on full-body versus partial.
+
+[10:11] Maya Chen: Then do both. Keep the class label, and add a separate partial flag in the manifest. Don't make partial a class. For the far-background case, if you can't tell the species at the native resolution, it's empty. The node won't be able to tell either.
+
+[10:11] Sofia Alvarez: That works. So, five classes, empty, deer, elk, coyote, other, plus a partial flag. I'll write that up as a labeling guideline so the undergrads follow the same rule.
+
+[10:11] Maya Chen: Yes. Write the guideline by Wednesday. I'll review the scheme before you relabel anything.
+
+[10:12] Sofia Alvarez: Got it. I'll also go back through the existing frames and flag partials. I think it's a couple hundred.
+
+[10:12] Priya Nair: Omar, evaluation.
+
+[10:12] Omar Haddad: I want to propose a layout for the evaluation dashboard so we stop pasting screenshots into chat. Three panels. Accuracy per week, day and night as two lines. Per-class recall as bars, because that's where the imbalance shows. And a confusion matrix for the latest model. All generated from one CSV that Priya's training script writes.
+
+[10:13] Priya Nair: I can write that CSV. Just tell me the columns.
+
+[10:13] Omar Haddad: I'll put them in the eval README. The second thing is the paper. If we're going for December 1, I'd like to start the related-work section now. I've found a few camera-trap classification papers and a couple on on-device inference. I'll share the two best ones in the channel this week so everyone can look.
+
+[10:14] Maya Chen: Good. Draft the related-work section. Don't wait for results.
+
+[10:14] Priya Nair: Wei, you have five minutes before you have to go.
+
+[10:14] Wei Zhang: I'll be quick. The night problem is a domain shift problem. Day frames are color, night frames are grayscale infrared with a flash, different contrast, different noise. I've been trying domain adaptation, basically training with a loss that makes the day and night features look alike. It helps a little on the river sites but I can't tell if it generalizes because we only have about 300 night frames and they're from two sites.
+
+[10:15] Maya Chen: How many do you need?
+
+[10:15] Wei Zhang: At least 2,000 night frames from four or more sites. Lucas's node will produce them once it's deployed with the new modules, but that's weeks away. In the meantime I'm limited.
+
+[10:16] Maya Chen: So this isn't a blocker for the paper, it's a data availability issue. Let's say that explicitly. The night work waits for field frames. It's not holding anyone else up.
+
+[10:16] Wei Zhang: Agreed. And I'm at the conference Tuesday through Thursday this week, so I'll be mostly offline. I'll read the channel in the evenings.
+
+[10:16] Priya Nair: Safe travels. Okay, Dr. Chen, the deadline.
+
+[10:17] Maya Chen: Here's how I see it. We have a daytime result that's good enough to show. We have a real hardware story with the power numbers. The night result is weak but honest. A workshop paper doesn't need the night problem solved, it needs it characterized. So I'm in favor of December 1. Objections?
+
+[10:17] Priya Nair: None, as long as the distillation gets the size under 250. A paper about an on-device model that doesn't fit on the device is a problem.
+
+[10:18] Lucas Moreno: None. I'd like the capture benchmark in the paper if the modules show up.
+
+[10:18] Sofia Alvarez: None, but I want to freeze a dataset version soon. If frames keep changing under the experiments, nothing is comparable.
+
+[10:18] Maya Chen: Fair. Bring a freeze proposal to the Wednesday sync. Omar?
+
+[10:18] Omar Haddad: None.
+
+[10:19] Maya Chen: Then it's decided. We target the December 1 workshop deadline.
+
+[10:19] Priya Nair: Let me read back the action items so the transcript has them. Sofia writes the labeling guideline by Wednesday and flags existing partial frames. Lucas benchmarks the new camera modules on Friday, assuming they arrive Thursday. I try knowledge distillation to get the model under 250 KB and report Wednesday. Omar drafts the related-work section and posts two papers in the channel. Dr. Chen reviews the label scheme before relabeling starts. Wei's night adaptation continues as data allows, no deadline.
+
+[10:20] Maya Chen: Correct. And one more. Lucas, the two-pulse trigger idea. Try it on the river site data you already have before Friday. I want to know how many of the 290 empty triggers it would have removed.
+
+[10:20] Lucas Moreno: I can simulate that from the trigger log tonight.
+
+[10:21] Omar Haddad: One small thing. For the dashboard I need everyone's results in the CSV format, not screenshots. Can we agree on that?
+
+[10:21] Priya Nair: Agreed. I'll write the first rows this week.
+
+[10:21] Sofia Alvarez: Also, when the manifest changes I'll post the class counts in the channel so people stop asking me.
+
+[10:22] Maya Chen: Good. Last point. We talked a few weeks ago about adding a sixth class for mountain lion. I'm not deciding that today. We have eleven frames. Park it until we have more data.
+
+[10:22] Wei Zhang: Agreed, eleven frames is nothing.
+
+[10:22] Priya Nair: Parked, not decided. Anything else?
+
+[10:23] Lucas Moreno: Does anyone have a spare SD card reader? Mine died.
+
+[10:23] Omar Haddad: I have one in the lab drawer.
+
+[10:23] Priya Nair: Then we're done. Wednesday sync is model, data and eval only. Lucas and Wei don't need to come. Thanks everyone.
+
+[10:24] Maya Chen: Thanks. Priya, send me the distillation numbers when you have them, even if they're bad.
+
+[10:24] Priya Nair: Will do. Stopping the recording.
+
+[End of transcript]

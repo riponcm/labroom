@@ -1,0 +1,11 @@
+{
+  "period": "Oct 26 to Oct 30, 2026",
+  "people": [
+    {"name": "Priya Nair", "workstream": "model", "commits": 5, "tasks_done": 2, "tasks_open": 0, "note": ""},
+    {"name": "Lucas Moreno", "workstream": "firmware", "commits": 7, "tasks_done": 0, "tasks_open": 1, "note": "Blocked: camera modules delayed to Nov 2"},
+    {"name": "Sofia Alvarez", "workstream": "data", "commits": 10, "tasks_done": 3, "tasks_open": 0, "note": ""},
+    {"name": "Omar Haddad", "workstream": "eval, paper", "commits": 2, "tasks_done": 2, "tasks_open": 0, "note": ""},
+    {"name": "Wei Zhang", "workstream": "night IR", "commits": 1, "tasks_done": 0, "tasks_open": 1, "note": "At conference Tue to Thu"},
+    {"name": "Maya Chen", "workstream": "PI", "commits": 0, "tasks_done": 1, "tasks_open": 0, "note": ""}
+  ]
+}

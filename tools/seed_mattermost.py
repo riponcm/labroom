@@ -29,6 +29,9 @@ import urllib.request
 from datetime import datetime
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from mmconf import mattermost_url  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 
 PEOPLE = {
@@ -85,7 +88,7 @@ def parse_log(path):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--url", default="http://localhost:50921")
+    ap.add_argument("--url", default=None, help="Mattermost URL; default: found with docker port")
     ap.add_argument("--admin", default="user", help="admin login id (username or email)")
     ap.add_argument("--team", default=None, help="team name as it appears in the Mattermost URL; default: the admin's first team")
     ap.add_argument("--channel", default="trailnet-lab")
@@ -94,6 +97,7 @@ def main():
     ap.add_argument("--main-agent", default=None,
                     help="agent to reassign as the room's main agent after seeding, e.g. coordinator.lab")
     args = ap.parse_args()
+    args.url = args.url or mattermost_url()
 
     msgs = parse_log(args.log)
     if not msgs:
@@ -105,9 +109,16 @@ def main():
         print(f"{len(msgs)} messages, {len(PEOPLE)} users, channel {args.channel}, team {args.team}")
         return 0
 
-    admin_pw = os.environ.get("MM_ADMIN_PASSWORD") or getpass.getpass("Mattermost admin password: ")
     mm = MM(args.url)
-    mm.token, admin_id = mm.login(args.admin, admin_pw)
+    cred_path = ROOT / ".local" / "mattermost_users.json"
+    creds = json.loads(cred_path.read_text()) if cred_path.exists() else {}
+    if all(u in creds for u, _, _ in PEOPLE.values()):
+        # Members already exist: act as Maya, no admin password needed.
+        mm.token, admin_id = mm.login("maya.chen", creds["maya.chen"])
+        print("members exist; acting as maya.chen")
+    else:
+        admin_pw = os.environ.get("MM_ADMIN_PASSWORD") or getpass.getpass("Mattermost admin password: ")
+        mm.token, admin_id = mm.login(args.admin, admin_pw)
 
     if args.team:
         status, team, _ = mm.call("GET", f"/teams/name/{args.team}")
@@ -122,9 +133,7 @@ def main():
     team_id = team["id"]
 
     # Users: create or reuse. Passwords kept in a git-ignored file.
-    cred_path = ROOT / ".local" / "mattermost_users.json"
     cred_path.parent.mkdir(exist_ok=True)
-    creds = json.loads(cred_path.read_text()) if cred_path.exists() else {}
     users = {}
     for display, (username, first, last) in PEOPLE.items():
         status, existing, _ = mm.call("GET", f"/users/username/{username}")
@@ -196,11 +205,13 @@ def main():
         time.sleep(0.2)
     print(f"posted {posted} messages to {args.channel}")
 
-    room_command("!follow-ups on")
     if args.main_agent:
+        # With a main agent, keep follow-ups off: otherwise an untagged message also
+        # reaches whichever agent spoke in the last 5 minutes, and work gets asked twice.
         room_command(f"!assign-agent @{args.main_agent}")
-        print(f"follow-ups back on, main agent {args.main_agent}")
+        print(f"main agent {args.main_agent}; follow-ups stay off")
     else:
+        room_command("!follow-ups on")
         print("follow-ups back on; no main agent (pass --main-agent to set one)")
     print(f"student passwords are in {cred_path}")
     return 0

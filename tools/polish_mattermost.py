@@ -25,6 +25,9 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from mmconf import mattermost_url  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 
 # Workstream colours from the validated categorical palette (light mode).
@@ -40,9 +43,9 @@ PEOPLE = [
 
 HEADER = (
     "**TrailNet Lab** · on-device wildlife counting · "
-    "Coordinator routes · Scribe: meetings, decisions, tasks · "
-    "Librarian: papers · Reporter: progress and charts · "
-    "Workshop paper due **Dec 1** · Model budget **250 KB**"
+    "Coordinator routes · Scribe: meetings, decisions, tasks · Librarian: papers · "
+    "Reporter: lab board · Logbook: daily logs by DM · Auditor: status and risks · "
+    "Workshop paper due **Dec 1** · Model budget **250 KB** · Pinned: brief, guide, log format"
 )
 
 
@@ -106,10 +109,12 @@ class MM:
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--url", default="http://localhost:50521")
+    ap.add_argument("--url", default=None, help="Mattermost URL; default: found with docker port")
     ap.add_argument("--channel", default="trailnet-lab")
     ap.add_argument("--no-header", action="store_true")
+    ap.add_argument("--pins", action="store_true", help="post and pin the lab guide, brief, log format and lab board")
     args = ap.parse_args()
+    args.url = args.url or mattermost_url()
 
     cred_path = ROOT / ".local" / "mattermost_users.json"
     if not cred_path.exists():
@@ -141,7 +146,63 @@ def main():
         if status != 200:
             raise SystemExit(f"header update failed: {status} {resp.get('message', '')}")
         print(f"header set on {args.channel} by maya.chen")
+
+    if args.pins and "maya.chen" in tokens:
+        pin_guides(mm, tokens["maya.chen"], args.channel)
     return 0
+
+
+LOG_FORMAT = """📒 **Daily log format** (logbook writes this for you from a direct message)
+
+```
+📒 Daily log · Tue Nov 3, 2026 · Priya Nair · model and quantization · 4.0 h
+Done
+  • Reran the night test on the v0.3 split: day 88.3, night 73.1 · 2.5 h
+  • Added per-class recall to the eval CSV · 1.5 h
+Evidence: commits 3f2a1c9, 7d0e4b2 · model/results.md
+Blockers: none
+Next: per-site night breakdown for Wei
+```"""
+
+
+def pin_guides(mm, token, channel):
+    """Post the reference material as Maya and pin it. Bookmarks need a paid licence; pins are free.
+    None of these posts mention an agent with @, so no agent wakes."""
+    status, teams, _ = mm.request("GET", "/users/me/teams", token=token)
+    status, chan, _ = mm.request("GET", f"/teams/{teams[0]['id']}/channels/name/{channel}", token=token)
+    channel_id = chan["id"]
+    status, pinned, _ = mm.request("GET", f"/channels/{channel_id}/pinned", token=token)
+    already = {pp["message"].splitlines()[0] for pp in (pinned or {}).get("posts", {}).values() if pp.get("message")}
+    brief = (ROOT / "seed" / "project_brief.md").read_text(encoding="utf-8")
+    brief = brief.split("```")[1].strip() if "```" in brief else brief
+    posts = [
+        ("📋 **Project brief**\n\n" + brief, None),
+        ((ROOT / "docs" / "LAB_GUIDE.md").read_text(encoding="utf-8"), None),
+        (LOG_FORMAT, None),
+        ("📊 **Lab board, week of Oct 26.** The reporter posts a new one every Monday.",
+         ROOT / "seed" / "board_week_oct26.png"),
+    ]
+    for text, attach in reversed(posts):
+        if text.splitlines()[0] in already:
+            print("already pinned:", text.splitlines()[0].encode("ascii", "ignore").decode()[:60])
+            continue
+        file_ids = []
+        if attach is not None:
+            boundary = uuid.uuid4().hex
+            raw = (
+                f"--{boundary}\r\nContent-Disposition: form-data; name=\"channel_id\"\r\n\r\n{channel_id}\r\n"
+                f"--{boundary}\r\nContent-Disposition: form-data; name=\"files\"; filename=\"{attach.name}\"\r\n"
+                "Content-Type: image/png\r\n\r\n"
+            ).encode() + attach.read_bytes() + f"\r\n--{boundary}--\r\n".encode()
+            status, up, _ = mm.request("POST", "/files", token=token, raw=raw,
+                                       content_type=f"multipart/form-data; boundary={boundary}")
+            file_ids = [f["id"] for f in up["file_infos"]]
+        status, post, _ = mm.request("POST", "/posts", token=token,
+                                     body={"channel_id": channel_id, "message": text, "file_ids": file_ids})
+        if status not in (200, 201):
+            raise SystemExit(f"pin post failed: {status} {post.get('message', '')}")
+        mm.request("POST", f"/posts/{post['id']}/pin", token=token)
+        print("pinned:", text.splitlines()[0].encode("ascii", "ignore").decode().strip()[:60])
 
 
 if __name__ == "__main__":

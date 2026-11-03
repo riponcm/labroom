@@ -24,6 +24,9 @@ import urllib.request
 import uuid
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from mmconf import mattermost_url  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 
 
@@ -50,9 +53,11 @@ def main():
     ap.add_argument("user", help="seeded username, e.g. priya.nair")
     ap.add_argument("message", help="message text; include @agent to address one")
     ap.add_argument("--file", help="file to attach")
-    ap.add_argument("--channel", default="trailnet-lab")
-    ap.add_argument("--url", default="http://localhost:50521")
+    ap.add_argument("--channel", default="trailnet")
+    ap.add_argument("--dm", help="send as a direct message to this bot or user (username), instead of the channel")
+    ap.add_argument("--url", default=None, help="Mattermost URL; default: found with docker port")
     args = ap.parse_args()
+    args.url = args.url or mattermost_url()
     url = args.url.rstrip("/")
 
     creds = json.loads((ROOT / ".local" / "mattermost_users.json").read_text())
@@ -63,10 +68,19 @@ def main():
         raise SystemExit(f"login failed: {status} {body.get('message', '')}")
     token = headers["Token"]
 
-    status, teams, _ = request(url, "GET", "/users/me/teams", token=token)
-    status, chan, _ = request(url, "GET", f"/teams/{teams[0]['id']}/channels/name/{args.channel}", token=token)
-    if status != 200:
-        raise SystemExit(f"channel {args.channel} not found: {chan.get('message', '')}")
+    if args.dm:
+        status, me, _ = request(url, "GET", "/users/me", token=token)
+        status, other, _ = request(url, "GET", f"/users/username/{args.dm}", token=token)
+        if status != 200:
+            raise SystemExit(f"user {args.dm} not found: {other.get('message', '')}")
+        status, chan, _ = request(url, "POST", "/channels/direct", token=token, body=[me["id"], other["id"]])
+        if status not in (200, 201):
+            raise SystemExit(f"direct channel failed: {status} {chan.get('message', '')}")
+    else:
+        status, teams, _ = request(url, "GET", "/users/me/teams", token=token)
+        status, chan, _ = request(url, "GET", f"/teams/{teams[0]['id']}/channels/name/{args.channel}", token=token)
+        if status != 200:
+            raise SystemExit(f"channel {args.channel} not found: {chan.get('message', '')}")
     channel_id = chan["id"]
 
     file_ids = []
@@ -89,7 +103,7 @@ def main():
                               body={"channel_id": channel_id, "message": args.message, "file_ids": file_ids})
     if status not in (200, 201):
         raise SystemExit(f"post failed: {status} {post.get('message', '')}")
-    print(f"posted as {args.user} to {args.channel}" + (f" with {Path(args.file).name}" if args.file else ""))
+    print(f"posted as {args.user} to {('DM ' + args.dm) if args.dm else args.channel}" + (f" with {Path(args.file).name}" if args.file else ""))
     return 0
 
 

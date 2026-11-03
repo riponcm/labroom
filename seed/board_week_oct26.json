@@ -1,0 +1,26 @@
+{
+  "period": "Week of Oct 26 to Oct 30, 2026",
+  "as_of": "2026-11-02",
+  "deadline": {"name": "Workshop paper", "date": "2026-12-01"},
+  "status": {"label": "at risk", "reason": "IR-cut modules late; night accuracy 73.1 and coyote night recall 41%"},
+  "people": [
+    {"name": "Priya Nair", "workstream": "model", "hours": 18.5, "commits": 5, "tasks_done": 3, "tasks_open": 1, "note": ""},
+    {"name": "Lucas Moreno", "workstream": "firmware", "hours": 19.5, "commits": 7, "tasks_done": 2, "tasks_open": 1, "note": "blocked on camera modules since Wed"},
+    {"name": "Sofia Alvarez", "workstream": "data", "hours": 22.5, "commits": 10, "tasks_done": 3, "tasks_open": 1, "note": ""},
+    {"name": "Omar Haddad", "workstream": "eval, paper", "hours": 10.0, "commits": 2, "tasks_done": 2, "tasks_open": 0, "note": "teaching two sections"},
+    {"name": "Wei Zhang", "workstream": "night IR", "hours": 4.0, "commits": 1, "tasks_done": 0, "tasks_open": 1, "note": "at a conference Tue to Thu"}
+  ],
+  "highlights": [
+    "Model at 240 KB, under the 250 KB budget (distillation, Wed)",
+    "Dataset v0.3 frozen: 4,120 frames, 160 night frames in test",
+    "Two-pulse trigger removes 180 of 290 empty triggers",
+    "Night test rerun: day 88.3, night 73.1"
+  ],
+  "blockers": [
+    {"who": "Lucas Moreno", "what": "IR-cut camera modules ship Mon Nov 2", "since": "Oct 28"},
+    {"who": "Wei Zhang", "what": "needs 2,000 field night frames", "since": "Oct 26"}
+  ],
+  "waiting": [
+    {"what": "Move Lucas's Fri Oct 30 capture benchmark deadline", "since": "Oct 28"}
+  ]
+}

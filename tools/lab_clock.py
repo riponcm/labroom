@@ -37,6 +37,27 @@ def nudge(meeting, kind):
     print(f"{datetime.now():%H:%M:%S} sent {kind} for {meeting['id']}", flush=True)
 
 
+MARKER = {"reminder": "⏰", "start": "▶️", "ended": "✅"}
+CHECK_AFTER = timedelta(seconds=120)
+MAX_TRIES = 3
+
+
+def organizer_posted(meeting, kind, since):
+    """True if the organizer posted this meeting's notice of this kind in the room since `since`.
+
+    A nudge that arrives while the organizer is busy with another request can be dropped
+    (Switch does not yet deliver messages sent mid-turn), so the clock checks and retries."""
+    sys.path.insert(0, str(ROOT / "tools"))
+    from lab_actions import MM  # noqa: E402
+    mm = MM("maya.chen")
+    chan = mm.channel(meeting.get("channel") or "trailnet")
+    author = mm.user_id("organizer.lab")
+    _, posts = mm.call("GET", f"/channels/{chan['id']}/posts?per_page=50&since={int(since.timestamp() * 1000)}")
+    title = meeting["title"].lower()
+    return any(p["user_id"] == author and title in p["message"].lower() and MARKER[kind] in p["message"]
+               for p in posts["posts"].values())
+
+
 def tick(remind, followup):
     if not MEETINGS.exists():
         return
@@ -47,12 +68,34 @@ def tick(remind, followup):
         start, end = datetime.fromisoformat(m["start"]), datetime.fromisoformat(m["end"])
         plan = [("reminder", start - timedelta(minutes=remind)), ("start", start),
                 ("ended", end + timedelta(minutes=followup))]
+        tries = m.setdefault("tries", {})
         for kind, due in plan:
             if not m["sent"].get(kind) and now >= due:
                 # Skip stale nudges more than an hour late, e.g. after the laptop slept.
                 if now - due < timedelta(hours=1):
                     nudge(m, kind)
+                    tries[kind] = {"count": 1, "last": now.isoformat(timespec="seconds")}
                 m["sent"][kind] = True
+                changed = True
+            elif m["sent"].get(kind) and kind in tries and tries[kind].get("confirmed") is None:
+                last = datetime.fromisoformat(tries[kind]["last"])
+                if now - last < CHECK_AFTER:
+                    continue
+                try:
+                    ok = organizer_posted(m, kind, last - timedelta(seconds=5))
+                except SystemExit as e:
+                    print(f"{now:%H:%M:%S} could not check {kind} for {m['id']}: {e}", flush=True)
+                    continue
+                if ok:
+                    tries[kind]["confirmed"] = True
+                    print(f"{now:%H:%M:%S} confirmed {kind} for {m['id']}", flush=True)
+                elif tries[kind]["count"] < MAX_TRIES:
+                    nudge(m, kind)
+                    tries[kind] = {"count": tries[kind]["count"] + 1, "last": now.isoformat(timespec="seconds")}
+                    print(f"{now:%H:%M:%S} retried {kind} for {m['id']} (no post seen)", flush=True)
+                else:
+                    tries[kind]["confirmed"] = False
+                    print(f"{now:%H:%M:%S} gave up on {kind} for {m['id']} after {MAX_TRIES} tries", flush=True)
                 changed = True
     if changed:
         MEETINGS.write_text(json.dumps(meetings, indent=2, ensure_ascii=False), encoding="utf-8")

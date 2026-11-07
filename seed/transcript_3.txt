@@ -1,0 +1,41 @@
+TrailNet Friday sync
+Friday, November 6, 2026, 14:24 to 14:41 MST
+Room: ENG 3412 and Zoom
+Attendees: Maya Chen, Priya Nair, Lucas Moreno, Sofia Alvarez, Omar Haddad, Wei Zhang
+Recorded and transcribed automatically. Speaker labels assigned by voice profile.
+
+[14:24] Maya Chen: Recording on. Paper is due December first, so I want three things today: where night recall stands, whether the stake unit survives a week on battery, and who owns which section.
+
+[14:24] Priya Nair: Night first. On the frozen v0.3 test split the quantized student is at 73 percent night accuracy, 88 day. Coyote recall at night is still the weak spot, 41 percent. Most misses are partial bodies at the edge of the frame.
+
+[14:25] Sofia Alvarez: That matches the labels. Twelve of the seventy coyote frames are partials. If we add infrared night frames from the ridge site, I can label four hundred by Wednesday.
+
+[14:26] Maya Chen: Do it, but not into v0.3. v0.3 stays frozen for the paper. The infrared frames go into v0.4, and the paper reports them only as a follow-up experiment.
+
+[14:26] Priya Nair: So: v0.3 frozen for every number in the paper, v0.4 is the infrared set.
+
+[14:27] Maya Chen: Yes. That's a decision.
+
+[14:28] Lucas Moreno: Stake unit. With the new sleep mode the board draws 3.1 milliamps idle. On the 18650 pack that's about nine days in theory. I want a real field test: one unit on the stake behind the lab from Monday to Friday.
+
+[14:29] Maya Chen: Good. Report the measured days, not the theoretical ones.
+
+[14:30] Omar Haddad: Dashboard. The per-class recall panel works on my laptop. It isn't in the repo yet.
+
+[14:30] Maya Chen: Then it isn't done. Commit it before you mark it done.
+
+[14:31] Omar Haddad: Fair. I'll push it by Monday.
+
+[14:32] Wei Zhang: Related work. I have the night-vision references from the conference. I'd like to own the related work section and draft it by Thursday.
+
+[14:33] Maya Chen: Yes. And one more decision: the workshop paper reports on-device results only. The cloud model comparison goes to the appendix.
+
+[14:34] Priya Nair: Agreed. That keeps the main table honest about the 250 KB budget.
+
+[14:35] Maya Chen: Priya, read it back.
+
+[14:35] Priya Nair: Decisions: v0.3 stays frozen for the paper and infrared frames go into v0.4; the paper reports on-device results only, cloud comparison in the appendix. Actions: Sofia labels four hundred infrared night frames by Wednesday November 11. Lucas runs the stake battery field test Monday to Friday and reports measured days. Omar commits the per-class recall panel by Monday November 9. Wei drafts related work by Thursday November 12. I rerun coyote recall with the partial flag split out by Tuesday.
+
+[14:36] Maya Chen: Good. Same time next Friday. Stopping the recording.
+
+[End of transcript]

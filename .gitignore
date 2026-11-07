@@ -33,3 +33,6 @@ desktop.ini
 .projectmem/watch.pid
 .projectmem/watch.log
 .projectmem/structure.json
+
+# Demo film project: kept local, not published
+video/

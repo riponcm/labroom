@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build switch/labroom.template.yaml from docs/agents/*.md and docs/room_instructions.txt.
 
-The template creates (or reuses) the six LabRoom agents and the lab room in one
+The template creates (or reuses) the seven LabRoom agents and the lab room in one
 run from Switch Console > Templates > Import template, then Use. Edit the
 instruction files, not the YAML, and rebuild.
 

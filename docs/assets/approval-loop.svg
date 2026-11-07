@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="400" viewBox="0 0 1280 400" role="img" aria-label="People approve every record: after a meeting and every evening, a person approves before anything is saved">
+<style>
+text{font-family:'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif}
+.p{transform-box:fill-box;transform-origin:center;animation-duration:11s;animation-iteration-count:infinite;animation-timing-function:ease-out}
+.bl{transform-box:fill-box;transform-origin:center;animation:blink 5s infinite}
+@keyframes blink{0%,90%,100%{transform:scaleY(1)}94%{transform:scaleY(.1)}}
+.k20{animation-name:k20}
+@keyframes k20{0%,1.82%{opacity:0;transform:scale(.85)}4.32%{opacity:1;transform:scale(1.04)}6.32%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k60{animation-name:k60}
+@keyframes k60{0%,5.45%{opacity:0;transform:scale(.85)}7.95%{opacity:1;transform:scale(1.04)}9.95%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k80{animation-name:k80}
+@keyframes k80{0%,7.27%{opacity:0;transform:scale(.85)}9.77%{opacity:1;transform:scale(1.04)}11.77%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k140{animation-name:k140}
+@keyframes k140{0%,12.73%{opacity:0;transform:scale(.85)}15.23%{opacity:1;transform:scale(1.04)}17.23%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k170{animation-name:k170}
+@keyframes k170{0%,15.45%{opacity:0;transform:scale(.85)}17.95%{opacity:1;transform:scale(1.04)}19.95%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k230{animation-name:k230}
+@keyframes k230{0%,20.91%{opacity:0;transform:scale(.85)}23.41%{opacity:1;transform:scale(1.04)}25.41%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k260{animation-name:k260}
+@keyframes k260{0%,23.64%{opacity:0;transform:scale(.85)}26.14%{opacity:1;transform:scale(1.04)}28.14%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k320{animation-name:k320}
+@keyframes k320{0%,29.09%{opacity:0;transform:scale(.85)}31.59%{opacity:1;transform:scale(1.04)}33.59%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k350{animation-name:k350}
+@keyframes k350{0%,31.82%{opacity:0;transform:scale(.85)}34.32%{opacity:1;transform:scale(1.04)}36.32%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k410{animation-name:k410}
+@keyframes k410{0%,37.27%{opacity:0;transform:scale(.85)}39.77%{opacity:1;transform:scale(1.04)}41.77%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k440{animation-name:k440}
+@keyframes k440{0%,40.00%{opacity:0;transform:scale(.85)}42.50%{opacity:1;transform:scale(1.04)}44.50%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k460{animation-name:k460}
+@keyframes k460{0%,41.82%{opacity:0;transform:scale(.85)}44.32%{opacity:1;transform:scale(1.04)}46.32%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k520{animation-name:k520}
+@keyframes k520{0%,47.27%{opacity:0;transform:scale(.85)}49.77%{opacity:1;transform:scale(1.04)}51.77%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k550{animation-name:k550}
+@keyframes k550{0%,50.00%{opacity:0;transform:scale(.85)}52.50%{opacity:1;transform:scale(1.04)}54.50%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k610{animation-name:k610}
+@keyframes k610{0%,55.45%{opacity:0;transform:scale(.85)}57.95%{opacity:1;transform:scale(1.04)}59.95%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k640{animation-name:k640}
+@keyframes k640{0%,58.18%{opacity:0;transform:scale(.85)}60.68%{opacity:1;transform:scale(1.04)}62.68%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k700{animation-name:k700}
+@keyframes k700{0%,63.64%{opacity:0;transform:scale(.85)}66.14%{opacity:1;transform:scale(1.04)}68.14%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k730{animation-name:k730}
+@keyframes k730{0%,66.36%{opacity:0;transform:scale(.85)}68.86%{opacity:1;transform:scale(1.04)}70.86%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.k800{animation-name:k800}
+@keyframes k800{0%,72.73%{opacity:0;transform:scale(.85)}75.23%{opacity:1;transform:scale(1.04)}77.23%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}96%,100%{opacity:0;transform:scale(.85)}}
+.g410{animation:g410 11s infinite}@keyframes g410{0%,37.27%{stroke:#1B2430}39.27%,92%{stroke:#1BAF7A}96%,100%{stroke:#1B2430}}.g700{animation:g700 11s infinite}@keyframes g700{0%,63.64%{stroke:#1B2430}65.64%,92%{stroke:#1BAF7A}96%,100%{stroke:#1B2430}}
+@media (prefers-reduced-motion: reduce){*{animation:none !important}}
+</style>
+<rect width="1280" height="400" rx="24" fill="#E9EEF2"/>
+<g class="p k20"><text x="48" y="58" font-size="36" font-weight="700" fill="#1B2430" text-anchor="start">People approve every record</text></g>
+<g class="p k60"><text x="48" y="96" font-size="20" font-weight="700" fill="#1B2430" text-anchor="start">After a meeting</text></g>
+<g class="p k80"><rect x="54" y="116" width="204" height="84" rx="16" fill="rgba(27,36,48,0.18)"/><rect x="48" y="108" width="204" height="84" rx="16" fill="#F7F9FB" stroke="#1B2430" stroke-width="5"/><text x="150" y="145" font-size="18" font-weight="600" fill="#1B2430" text-anchor="middle">Transcript dropped</text><text x="150" y="167" font-size="18" font-weight="600" fill="#1B2430" text-anchor="middle">in the room</text></g>
+<g class="p k170"><rect x="299" y="116" width="204" height="84" rx="16" fill="rgba(27,36,48,0.18)"/><rect x="293" y="108" width="204" height="84" rx="16" fill="#F7F9FB" stroke="#1B2430" stroke-width="5"/><text x="395" y="145" font-size="18" font-weight="600" fill="#1B2430" text-anchor="middle">scribe: summary</text><text x="395" y="167" font-size="18" font-weight="600" fill="#1B2430" text-anchor="middle">+ tasks</text></g>
+<g class="p k140"><line x1="258" y1="150" x2="273" y2="150" stroke="#1B2430" stroke-width="5" stroke-dasharray="14 10" stroke-linecap="round"/><polygon points="287,150 273,139 273,161" fill="#1B2430" stroke="#1B2430" stroke-width="3" stroke-linejoin="round"/></g>
+<g class="p k260"><rect x="544" y="116" width="204" height="84" rx="16" fill="rgba(27,36,48,0.18)"/><rect x="538" y="108" width="204" height="84" rx="16" fill="#F7F9FB" stroke="#1B2430" stroke-width="5"/><text x="640" y="145" font-size="18" font-weight="600" fill="#1B2430" text-anchor="middle">Decisions</text><text x="640" y="167" font-size="18" font-weight="600" fill="#1B2430" text-anchor="middle">PROPOSED</text></g>
+<g class="p k230"><line x1="503" y1="150" x2="518" y2="150" stroke="#1B2430" stroke-width="5" stroke-dasharray="14 10" stroke-linecap="round"/><polygon points="532,150 518,139 518,161" fill="#1B2430" stroke="#1B2430" stroke-width="3" stroke-linejoin="round"/></g>
+<g class="p k350"><rect x="789" y="116" width="204" height="84" rx="16" fill="rgba(27,36,48,0.18)"/><rect class="g410" x="783" y="108" width="204" height="84" rx="16" fill="#F7F9FB" stroke="#1BAF7A" stroke-width="5"/><text x="885" y="156" font-size="18" font-weight="700" fill="#1B2430" text-anchor="middle">Dr. Chen: approve</text></g>
+<g class="p k320"><line x1="748" y1="150" x2="763" y2="150" stroke="#1B2430" stroke-width="5" stroke-dasharray="14 10" stroke-linecap="round"/><polygon points="777,150 763,139 763,161" fill="#1B2430" stroke="#1B2430" stroke-width="3" stroke-linejoin="round"/></g>
+<g class="p k440"><rect x="1034" y="116" width="204" height="84" rx="42" fill="rgba(27,36,48,0.18)"/><rect x="1028" y="108" width="204" height="84" rx="42" fill="#1BAF7A" stroke="#1B2430" stroke-width="5"/><text x="1130" y="145" font-size="18" font-weight="700" fill="#1B2430" text-anchor="middle">decisions-log:</text><text x="1130" y="167" font-size="18" font-weight="700" fill="#1B2430" text-anchor="middle">APPROVED</text></g>
+<g class="p k410"><line x1="993" y1="150" x2="1008" y2="150" stroke="#1B2430" stroke-width="5" stroke-dasharray="14 10" stroke-linecap="round"/><polygon points="1022,150 1008,139 1008,161" fill="#1B2430" stroke="#1B2430" stroke-width="3" stroke-linejoin="round"/></g>
+<g class="p k440"><text x="48" y="236" font-size="20" font-weight="700" fill="#1B2430" text-anchor="start">Every evening</text></g>
+<g class="p k460"><rect x="54" y="256" width="204" height="84" rx="16" fill="rgba(27,36,48,0.18)"/><rect x="48" y="248" width="204" height="84" rx="16" fill="#F7F9FB" stroke="#1B2430" stroke-width="5"/><text x="150" y="285" font-size="18" font-weight="600" fill="#1B2430" text-anchor="middle">Priya DMs her day,</text><text x="150" y="307" font-size="18" font-weight="600" fill="#1B2430" text-anchor="middle">in her words</text></g>
+<g class="p k550"><rect x="299" y="256" width="204" height="84" rx="16" fill="rgba(27,36,48,0.18)"/><rect x="293" y="248" width="204" height="84" rx="16" fill="#F7F9FB" stroke="#1B2430" stroke-width="5"/><text x="395" y="285" font-size="18" font-weight="600" fill="#1B2430" text-anchor="middle">logbook drafts a</text><text x="395" y="307" font-size="18" font-weight="600" fill="#1B2430" text-anchor="middle">clean entry</text></g>
+<g class="p k520"><line x1="258" y1="290" x2="273" y2="290" stroke="#1B2430" stroke-width="5" stroke-dasharray="14 10" stroke-linecap="round"/><polygon points="287,290 273,279 273,301" fill="#1B2430" stroke="#1B2430" stroke-width="3" stroke-linejoin="round"/></g>
+<g class="p k640"><rect x="544" y="256" width="204" height="84" rx="16" fill="rgba(27,36,48,0.18)"/><rect class="g700" x="538" y="248" width="204" height="84" rx="16" fill="#F7F9FB" stroke="#1BAF7A" stroke-width="5"/><text x="640" y="296" font-size="18" font-weight="700" fill="#1B2430" text-anchor="middle">Priya: yes</text></g>
+<g class="p k610"><line x1="503" y1="290" x2="518" y2="290" stroke="#1B2430" stroke-width="5" stroke-dasharray="14 10" stroke-linecap="round"/><polygon points="532,290 518,279 518,301" fill="#1B2430" stroke="#1B2430" stroke-width="3" stroke-linejoin="round"/></g>
+<g class="p k730"><rect x="789" y="256" width="204" height="84" rx="42" fill="rgba(27,36,48,0.18)"/><rect x="783" y="248" width="204" height="84" rx="42" fill="#1BAF7A" stroke="#1B2430" stroke-width="5"/><text x="885" y="285" font-size="18" font-weight="700" fill="#1B2430" text-anchor="middle">Posted to the lab</text><text x="885" y="307" font-size="18" font-weight="700" fill="#1B2430" text-anchor="middle">+ daily-logs</text></g>
+<g class="p k700"><line x1="748" y1="290" x2="763" y2="290" stroke="#1B2430" stroke-width="5" stroke-dasharray="14 10" stroke-linecap="round"/><polygon points="777,290 763,279 763,301" fill="#1B2430" stroke="#1B2430" stroke-width="3" stroke-linejoin="round"/></g>
+<g class="p k800"><text x="640" y="372" font-size="18" font-weight="400" fill="#1B2430" text-anchor="middle">Every record cites its source · nobody is ranked</text></g>
+</svg>

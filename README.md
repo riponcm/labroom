@@ -332,7 +332,6 @@ labroom/
 | [Claude Code](https://claude.com/claude-code) | runs each of the seven agents (Haiku 5.5, Sonnet 5.5, Opus 5.5) |
 | [Mattermost](https://github.com/mattermost/mattermost) | the lab's chat, bundled with the local Switch server |
 | [HyperFrames](https://hyperframes.heygen.com) | the demo video: HTML and GSAP compositions rendered to MP4 |
-| [Wispr Flow](https://wisprflow.ai) | voice dictation while writing agent instructions and docs |
 
 Everything else, including the agent instructions, the Switch template, the seed lab and the helper scripts, was written for this hackathon. The helper scripts use the Python standard library, plus matplotlib and Pillow for the charts, the lab board image and the avatars.
 

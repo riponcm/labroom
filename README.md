@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="VIDEO_URL"><img src="https://img.shields.io/badge/%E2%96%B6%20Watch%20the%20demo-3%20min-1BAF7A?style=for-the-badge" alt="Watch the 3-minute demo video"></a>
+  <a href="#watch-the-demo"><img src="https://img.shields.io/badge/%E2%96%B6%20Watch%20the%20demo-2%20min%2027%20s-1BAF7A?style=for-the-badge" alt="Watch the 2.5-minute demo video"></a>
   <a href="#quick-start-reproduce-the-lab-in-15-minutes"><img src="https://img.shields.io/badge/Quick%20start-15%20min-1B2430?style=for-the-badge" alt="Quick start"></a>
   <a href="#use-labroom-in-your-own-lab"><img src="https://img.shields.io/badge/Use%20it%20in%20your%20lab-guide-2A78D6?style=for-the-badge" alt="Use LabRoom in your own lab"></a>
   <a href="#faq"><img src="https://img.shields.io/badge/FAQ-answers-6250D6?style=for-the-badge" alt="Frequently asked questions"></a>
@@ -60,11 +60,11 @@ It was built in four days for the **Flip the Switch hackathon** (WeMakeDevs × D
 
 ## Watch the demo
 
-<p align="center">
-  <a href="VIDEO_URL"><img src="docs/assets/video-thumb.jpg" alt="LabRoom demo video: Dr. Maya Chen's three weekly questions. What did we decide? Who is blocked? Is it really done?" width="80%"></a>
-</p>
+https://github.com/user-attachments/assets/149e0816-fcd9-4386-a8b7-132874112068
 
-The 3-minute film tells one story: Dr. Maya Chen runs a lab of five students who build one camera-trap CNN together. Her three weekly questions are *What did we decide? Who is blocked? Is it really done?* Each one gets answered on screen, live, in the lab's chat. Everything in the screen recordings happened in a real Switch room on Nov 6, 2026. The lab and its people are fictional.
+<sub>The video doesn't play? [Open the LabRoom demo video directly](https://github.com/user-attachments/assets/149e0816-fcd9-4386-a8b7-132874112068) (2 min 27 s, 1080p).</sub>
+
+The 2.5-minute film tells one story: Dr. Maya Chen runs a lab of five students who build one camera-trap CNN together. Her three weekly questions are *What did we decide? Who is blocked? Is it really done?* Each one gets answered on screen, live, in the lab's chat. Everything in the screen recordings happened in a real Switch room on Nov 6, 2026. The lab and its people are fictional.
 
 ---
 

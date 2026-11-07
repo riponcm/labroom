@@ -248,7 +248,7 @@ On Windows, `tools/schedule_lab.ps1` registers the weekday 17:03 log reminder an
 | maya.chen | `@auditor audit this week` | status, checks with sources, a "needs Dr. Chen" list |
 | anyone | *thanks everyone* | no reply: the agents stay quiet |
 
-To act as a lab member, sign in to Mattermost as `maya.chen`, `priya.nair` and so on (the passwords are in `.local/mattermost_users.json`), or post from a script with `python tools/post_as.py maya.chen "…"`. The full test list with expected results is in [`docs/TEST_GUIDE.md`](docs/TEST_GUIDE.md).
+To act as a lab member, sign in to Mattermost as `maya.chen`, `priya.nair` and so on (the passwords are in `.local/mattermost_users.json`), or post from a script with `python tools/post_as.py maya.chen "…"`.
 
 ---
 
@@ -307,8 +307,6 @@ labroom/
 │   ├── room_instructions.txt  # the project brief and the lab's rules every agent reads
 │   ├── LAB_RECORDS.md         # what the PI needs, what students give, the log format, the audit
 │   ├── LAB_GUIDE.md           # the pinned "how this room works" guide
-│   ├── TEST_GUIDE.md          # every workflow with its expected result
-│   ├── BUILD_DAY.md           # build log: what was tried, what broke, what was fixed
 │   └── assets/                # README images and animated SVGs
 ├── switch/labroom.template.yaml  # one-step Switch template: room + 7 agents
 ├── seed/                      # the fictional lab: transcripts, chat log, daily logs, papers
@@ -384,7 +382,7 @@ This repository was created for the **[Flip the Switch hackathon](https://www.we
 LabRoom's answer: a research lab is a business workflow that nobody had built for yet. Meetings, decisions, tasks, daily progress, papers and audits all run through one room, and a person approves every record.
 
 - **Built by:** Ripon Chandra Malo, PhD researcher, University of Utah ([@riponcm](https://github.com/riponcm))
-- **Built during the window:** Nov 4, 12:01 AM IST (Nov 3, 11:31 AM MST) to Nov 7, 2026. The seed data was prepared before the window; the Switch room, the agents and the workflow were all built after it opened. The build log is in [`docs/BUILD_DAY.md`](docs/BUILD_DAY.md).
+- **Built during the window:** Nov 4, 12:01 AM IST (Nov 3, 11:31 AM MST) to Nov 7, 2026. The seed data was prepared before the window; the Switch room, the agents and the workflow were all built after it opened. The commit history shows the build.
 
 ---
 

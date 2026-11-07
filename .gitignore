@@ -36,3 +36,11 @@ desktop.ini
 
 # Demo film project: kept local, not published
 video/
+
+# Planning and build notes: kept outside the repo
+docs/PLAN.md
+docs/RULES_CHECKLIST.md
+docs/BUILD_DAY.md
+docs/TEST_GUIDE.md
+docs/agent_instructions.json
+seed/README.md
